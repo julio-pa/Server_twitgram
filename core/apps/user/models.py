@@ -4,18 +4,16 @@ from django.utils import timezone
 # Create your models here.
 
 
-def user_img_directory(instance, filename):
-    return 'user/{0}/{1}'.format(instance.name, filename)
+# def user_img_directory(instance, filename):
+#     return 'user/{0}/{1}'.format(instance.name, filename)
 
 
 class User(models.Model):
     name = models.CharField(max_length=64)
     username = models.CharField(max_length=64)
     slug = models.CharField(max_length=255)
-    img_perfil = models.ImageField(
-        upload_to=user_img_directory, max_length=500)
-    banner = models.ImageField(
-        upload_to=user_img_directory, max_length=500)
+    img_perfil = models.ImageField(default='user-icon.webp')
+    banner = models.ImageField(default='userbanner.jpg')
     bio = models.CharField(max_length=70)
     joined = models.DateTimeField(default=timezone.now)
     following = models.IntegerField(default=0, blank=True)

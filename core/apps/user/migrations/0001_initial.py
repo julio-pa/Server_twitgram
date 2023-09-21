@@ -16,12 +16,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=64)),
                 ('username', models.CharField(max_length=64)),
                 ('slug', models.CharField(max_length=255)),
-                ('img_perfil', models.ImageField(max_length=500, upload_to=apps.user.models.user_img_directory)),
-                ('banner', models.ImageField(max_length=500, upload_to=apps.user.models.user_img_directory)),
+                ('img_perfil', models.ImageField(default='useicon.png')),
+                ('banner', models.ImageField(default='userbanner.png')),
                 ('bio', models.CharField(max_length=70)),
                 ('joined', models.DateTimeField(default=django.utils.timezone.now)),
                 ('following', models.IntegerField(blank=True, default=0)),

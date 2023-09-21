@@ -17,9 +17,9 @@ class Tweet(models.Model):
     #     #     return super().get_queryset().filter(status='published')
 
     user = models.ForeignKey(
-        User, related_name='user_name', on_delete=models.CASCADE)
+        User, related_name='user_name', on_delete=models.PROTECT)
     thumbnail = models.ImageField(
-        upload_to=blog_thumbnail_directory, max_length=500)
+        upload_to=blog_thumbnail_directory, max_length=500, blank=True, null=True)
 
     description = models.TextField(max_length=400)
 

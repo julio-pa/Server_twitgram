@@ -1,6 +1,7 @@
 from django.db import models
 # from apps.server.models import Tweet
 from django.utils import timezone
+import uuid
 # Create your models here.
 
 
@@ -9,9 +10,9 @@ from django.utils import timezone
 
 
 class User(models.Model):
+    id = models.CharField(primary_key=True, editable=False, max_length=10)
     name = models.CharField(max_length=64)
     username = models.CharField(max_length=64)
-    slug = models.CharField(max_length=255)
     img_perfil = models.ImageField(default='user-icon.webp')
     banner = models.ImageField(default='userbanner.jpg')
     bio = models.CharField(max_length=70)
@@ -23,3 +24,10 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, **kwargs):
+        if not self.id:
+
+            self.id = uuid.uuid4()
+
+        super().save(*kwargs)

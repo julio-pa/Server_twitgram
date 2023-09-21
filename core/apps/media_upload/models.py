@@ -1,8 +1,6 @@
 from django.db import models
-from django.db.models import Max
 import uuid
 # Create your models here.
-from django.db import models
 from cloudinary.models import CloudinaryField
 
 

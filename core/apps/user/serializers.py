@@ -11,7 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'username',
-            'slug',
             'img_perfil',
             'banner',
             'bio',

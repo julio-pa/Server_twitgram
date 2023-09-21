@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from apps.user.models import User
 from apps.media_upload.models import Photo
+import uuid
 # from cloudinary.models import CloudinaryField
 
 
@@ -21,7 +22,7 @@ class Tweet(models.Model):
     # class TweetObjects(models.Manager):
     #     # def get_queryset(self):
     #     #     return super().get_queryset().filter(status='published')
-
+    id = models.CharField(primary_key=True, editable=False, max_length=10)
     user = models.ForeignKey(
         User, related_name='user_name', on_delete=models.PROTECT)
     thumbnail = models.ForeignKey(
@@ -44,6 +45,13 @@ class Tweet(models.Model):
     def get_view_count(self):
         likes = ViewCount.objects.filter(tweet=self).count()
         return likes
+
+    def save(self, **kwargs):
+        if not self.id:
+
+            self.id = uuid.uuid4()
+
+        super().save(*kwargs)
 
 
 class ViewCount(models.Model):

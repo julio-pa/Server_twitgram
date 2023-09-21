@@ -15,6 +15,7 @@ from pathlib import Path
 # from datetime import timedelta
 import os
 import environ
+import cloudinary
 env = environ.Env()
 environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,11 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
     'apps.server',
     'apps.user',
+    'apps.media_upload',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +140,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_HOSTS_DEV')
+
+# Cloudinary
+
+cloudinary.config(
+    cloud_name="domrjaan9",
+    api_key=os.environ.get('CLOUDINARY_API'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET')
+)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'domrjaan9',
+    'API_KEY': os.environ.get('CLOUDINARY_API'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -1,10 +1,16 @@
 from django.db import models
 from django.utils import timezone
 from apps.user.models import User
+from apps.media_upload.models import Photo
+# from cloudinary.models import CloudinaryField
 
 
-def blog_thumbnail_directory(instance, filename):
-    return 'tweet/{0}/{1}'.format(instance.id, filename)
+# def blog_thumbnail_directory(filename):
+#     return cloudinary.uploader.upload(f'{filename}',
+#                                       public_id=f'{filename}')
+
+# def cloudinary_upload(filename):
+#     cloudinary.uploader.upload(request.FILES[f'{filename}'])
 
 
 # Create your models here.
@@ -18,8 +24,8 @@ class Tweet(models.Model):
 
     user = models.ForeignKey(
         User, related_name='user_name', on_delete=models.PROTECT)
-    thumbnail = models.ImageField(
-        upload_to=blog_thumbnail_directory, max_length=500, blank=True, null=True)
+    thumbnail = models.ForeignKey(
+        Photo, related_name='img_url', on_delete=models.PROTECT, blank=True, null=True)
 
     description = models.TextField(max_length=400)
 

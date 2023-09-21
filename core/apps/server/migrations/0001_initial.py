@@ -18,12 +18,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tweet',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('thumbnail', models.ImageField(max_length=500, upload_to=apps.server.models.blog_thumbnail_directory)),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('thumbnail', models.ImageField(
+                    max_length=500, upload_to='images/')),
                 ('description', models.TextField(max_length=400)),
-                ('published', models.DateTimeField(default=django.utils.timezone.now)),
+                ('published', models.DateTimeField(
+                    default=django.utils.timezone.now)),
                 ('likes', models.IntegerField(blank=True, default=0)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_name', to='user.user')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='user_name', to='user.user')),
             ],
             options={
                 'ordering': ('-published',),
@@ -32,9 +36,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ViewCount',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('ip_address', models.CharField(max_length=255)),
-                ('tweet', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tweet_view_count', to='server.tweet')),
+                ('tweet', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='tweet_view_count', to='server.tweet')),
             ],
         ),
     ]

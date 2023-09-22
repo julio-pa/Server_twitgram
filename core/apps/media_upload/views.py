@@ -41,3 +41,17 @@ class GetImagesView(APIView):
             return Response({'images': serializer.data}, status=status.HTTP_200_OK)
         else:
             return JsonResponse(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+class IndividualImagesView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, id, format=None):
+        if Photo.objects.filter(id=id).exists():
+
+            img = Photo.objects.get(id=id)
+            serializer = ImageSerializer(img)
+
+            return Response({'images': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse(serializer.errors, status=status.HTTP_404_NOT_FOUND)

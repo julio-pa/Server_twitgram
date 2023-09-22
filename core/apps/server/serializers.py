@@ -15,3 +15,4 @@ class TweetSerializer(serializers.ModelSerializer):
             'published',
             'likes'
         ]
+        depth = 1

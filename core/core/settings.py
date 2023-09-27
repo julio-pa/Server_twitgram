@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
+    'rest_framework_simplejwt',
     'corsheaders',
     'apps.server',
     'apps.user',
@@ -129,11 +130,12 @@ USE_TZ = True
 
 # Djoser config
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
-    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ),
 }
 
@@ -165,6 +167,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_HOSTS_DEV')
+CORS_ORIGIN_WHITELIST = env.list('CORS_ALLOWED_HOSTS_DEV')
+CSRF_TRUSTED_ORIGINS = env.list('CORS_ALLOWED_HOSTS_DEV')
 
 # Cloudinary
 

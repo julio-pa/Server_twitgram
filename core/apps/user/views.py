@@ -5,7 +5,7 @@ from rest_framework import permissions
 from rest_framework import permissions
 from .pagination import SmallSetPagination, MediumSetPagination, LargeSetPagination
 
-from .models import User
+from .models import UserAccount
 from .serializers import UserSerializer
 # Create your views here.
 
@@ -14,9 +14,9 @@ class UserListView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, format=None):
-        if User.objects.all().exists():
+        if UserAccount.objects.all().exists():
 
-            users = User.objects.all()
+            users = UserAccount.objects.all()
 
             paginator = SmallSetPagination()
             results = paginator.paginate_queryset(users, request)

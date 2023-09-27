@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from apps.user.models import User
+from apps.user.models import UserAccount
 import uuid
 # from cloudinary.models import CloudinaryField
 
@@ -23,7 +23,7 @@ class Tweet(models.Model):
     #     #     return super().get_queryset().filter(status='published')
     id = models.CharField(primary_key=True, editable=False, max_length=10)
     user = models.ForeignKey(
-        User, related_name='user_name', on_delete=models.PROTECT)
+        UserAccount, related_name='user_name', on_delete=models.PROTECT)
     thumbnail = models.ImageField(default='user-icon.webp', blank=True)
 
     description = models.TextField(max_length=400)

@@ -1,33 +1,60 @@
 from django.db import models
-# from apps.server.models import Tweet
+
 from django.utils import timezone
-import uuid
+# import uuid
+
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+
 # Create your models here.
 
 
-# def user_img_directory(instance, filename):
-#     return 'user/{0}/{1}'.format(instance.name, filename)
+# @receiver(pre_save, sender=UserAccount)
+class UserAccountManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+
+        return user
+
+    def create_superuser(self, email, password, **extra_fields):
+        user = self.create_user(email, password, **extra_fields)
+
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+        return user
 
 
-class User(models.Model):
-    id = models.CharField(primary_key=True, editable=False, max_length=10)
-    name = models.CharField(max_length=64)
+class UserAccount(AbstractBaseUser, PermissionsMixin):
+    # id = models.CharField(primary_key=True, editable=False, max_length=10)
     username = models.CharField(max_length=64)
+    email = models.EmailField(
+        max_length=255, unique=True)
     img_perfil = models.ImageField(default='user-icon.webp', blank=True)
     banner = models.ImageField(default='userbanner.jpg', blank=True)
-    bio = models.CharField(max_length=70)
+    bio = models.CharField(max_length=70, blank=True, default='no bio yet')
     joined = models.DateTimeField(default=timezone.now)
     following = models.IntegerField(default=0, blank=True)
     followers = models.IntegerField(default=0, blank=True)
-    # tweets = models.ForeignKey(
-    #     Tweet, related_name='user_tweets', on_delete=models.PROTECT)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserAccountManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.name
+        return self.username
 
-    def save(self, **kwargs):
-        if not self.id:
+    # def save(self, **kwargs):
 
-            self.id = uuid.uuid4()
+    #     if not self.id:
+    #         self.id = uuid.uuid4()
 
-        super().save(*kwargs)
+    #     super().save(*kwargs)

@@ -7,7 +7,6 @@ from .permissions import IsPostAuthorOrReadOnly, AuthorPermission
 
 from .models import Tweet
 from .serializers import TweetSerializer
-from apps.user.models import User
 
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser

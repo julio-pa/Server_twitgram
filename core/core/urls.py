@@ -8,7 +8,7 @@ urlpatterns = [
     path('api/tweet/', include('apps.server.urls')),
     path('api/user/', include('apps.user.urls')),
     path('api/media/', include('apps.media_upload.urls')),
-    # path('api/category/', include('apps.category.urls')),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 ]

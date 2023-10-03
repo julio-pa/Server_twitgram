@@ -43,6 +43,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     following = models.IntegerField(default=0, blank=True)
     followers = models.IntegerField(default=0, blank=True)
     is_staff = models.BooleanField(default=False)
+    is_editor = models.BooleanField(default=True)
 
     objects = UserAccountManager()
 

@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from apps.user.models import UserAccount
-import uuid
 # from cloudinary.models import CloudinaryField
 
 
@@ -21,10 +20,11 @@ class Tweet(models.Model):
     # class TweetObjects(models.Manager):
     #     # def get_queryset(self):
     #     #     return super().get_queryset().filter(status='published')
-    id = models.CharField(primary_key=True, editable=False, max_length=10)
+    # id = models.CharField(primary_key=True, editable=False, max_length=10)
     user = models.ForeignKey(
-        UserAccount, related_name='user_name', on_delete=models.PROTECT)
-    thumbnail = models.ImageField(default='user-icon.webp', blank=True)
+        UserAccount, related_name='user', on_delete=models.PROTECT, null=True)
+    thumbnail = models.ImageField(
+        upload_to='images/', max_length=5000, blank=True, null=True)
 
     description = models.TextField(max_length=400)
 
@@ -40,16 +40,16 @@ class Tweet(models.Model):
     def __str__(self):
         return self.description
 
-    def get_view_count(self):
-        likes = ViewCount.objects.filter(tweet=self).count()
-        return likes
+    # def get_view_count(self):
+    #     likes = ViewCount.objects.filter(tweet=self).count()
+    #     return likes
 
-    def save(self, **kwargs):
-        if not self.id:
+    # def save(self, **kwargs):
+    #     if not self.id:
 
-            self.id = uuid.uuid4()
+    #         self.id = uuid.uuid4()
 
-        super().save(*kwargs)
+    #     super().save(*kwargs)
 
 
 class ViewCount(models.Model):

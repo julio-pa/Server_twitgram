@@ -7,7 +7,7 @@ from .pagination import SmallSetPagination
 from .permissions import IsPostAuthorOrReadOnly, AuthorPermission
 
 from .models import Tweet
-from .serializers import TweetSerializer, PostSerializer
+from .serializers import TweetSerializer
 
 from django.http.response import JsonResponse
 # from rest_framework.parsers import JSONParser
@@ -38,9 +38,9 @@ class CreateTweetView(APIView):
     # serializer_class = PostSerializer
 
     def post(self, request, format=None):
-        print(request.data)
+        # print(request.data)
         tweet_serializer = TweetSerializer(data=request.data)
-        print(tweet_serializer)
+        # print(tweet_serializer)
         if tweet_serializer.is_valid():
             tweet_serializer.save()
             return Response(tweet_serializer.data, status=status.HTTP_201_CREATED)

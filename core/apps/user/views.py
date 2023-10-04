@@ -1,14 +1,13 @@
+from django.http.response import JsonResponse
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from rest_framework import permissions
-from .pagination import SmallSetPagination, MediumSetPagination, LargeSetPagination
 
 from .models import UserAccount
 from .serializers import UserSerializer
-from django.http.response import JsonResponse
-# Create your views here.
+from .pagination import SmallSetPagination
 
 
 class UserListView(APIView):
@@ -40,3 +39,40 @@ class UserPerfil(APIView):
             return Response({'perfil': serializer.data}, status=status.HTTP_200_OK)
         else:
             return JsonResponse(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+class UpdateProfile(APIView):
+    permission_classes = (permissions.AllowAny,)
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = UserSerializer
+
+    def put(self, request, format=None):
+        # user = self.request.user
+
+        data = self.request.data
+        user_id = data['id']
+
+        print(data)
+
+        profile = UserAccount.objects.get(id=user_id)
+
+        if (data['username']):
+            if not (data['username'] == 'undefined'):
+                profile.username = data['username']
+                profile.save()
+
+        if (data['bio']):
+            if not (data['bio'] == 'undefined'):
+                profile.bio = data['bio']
+                profile.save()
+
+        if (data['img_perfil']):
+            if not (data['img_perfil'] == 'undefined'):
+                profile.img_perfil = data['img_perfil']
+                profile.save()
+        if (data['banner']):
+            if not (data['banner'] == 'undefined'):
+                profile.banner = data['banner']
+                profile.save()
+
+        return Response({'perfil': 'profile updated'}, status=status.HTTP_200_OK)

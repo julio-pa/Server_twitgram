@@ -22,6 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserAccount
+        ordering = ('-published',)
         fields = [
             'id',
             'username',

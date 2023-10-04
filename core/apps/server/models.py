@@ -17,10 +17,6 @@ from apps.user.models import UserAccount
 
 class Tweet(models.Model):
 
-    # class TweetObjects(models.Manager):
-    #     # def get_queryset(self):
-    #     #     return super().get_queryset().filter(status='published')
-    # id = models.CharField(primary_key=True, editable=False, max_length=10)
     user = models.ForeignKey(
         UserAccount, related_name='user', on_delete=models.PROTECT, null=True)
     thumbnail = models.ImageField(

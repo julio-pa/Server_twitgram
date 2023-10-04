@@ -36,8 +36,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=64)
     email = models.EmailField(
         max_length=255, unique=True)
-    img_perfil = models.ImageField(default='user-icon.webp', blank=True)
-    banner = models.ImageField(default='userbanner.jpg', blank=True)
+    img_perfil = models.ImageField(blank=True, null=True)
+    banner = models.ImageField(blank=True, null=True)
     bio = models.CharField(max_length=70, blank=True, default='no bio yet')
     joined = models.DateTimeField(default=timezone.now)
     following = models.IntegerField(default=0, blank=True)
@@ -47,15 +47,11 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     objects = UserAccountManager()
 
+    class Meta:
+        ordering = ('-joined', )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.username
-
-    # def save(self, **kwargs):
-
-    #     if not self.id:
-    #         self.id = uuid.uuid4()
-
-    #     super().save(*kwargs)

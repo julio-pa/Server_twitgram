@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'apps.server',
     'apps.user',
+    'core',
     'apps.media_upload',
     'cloudinary'
 ]
@@ -175,7 +176,7 @@ DJOSER = {
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
